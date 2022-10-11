@@ -3,6 +3,7 @@ import cors from "cors";
 import path from "path";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import { mongo } from "./config/mongodb";
 
 const app = express();
 const port = 8080;
@@ -19,4 +20,5 @@ app.get("/", (req, res) => {
 
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
+  mongo();
 });
