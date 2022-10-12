@@ -1,0 +1,11 @@
+Task Group
+-name
+-category?
+
+Task
+-task_group_id
+-description
+-completed
+-dateCreated
+-dueDate
+-priority?

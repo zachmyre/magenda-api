@@ -10,7 +10,7 @@ const PORT = 8080;
 
 // Route Declaration
 const userRoutes = require('./routes/UserRoutes');
-
+const taskRoutes = require('./routes/TaskRoutes');
 
 const app = express();
 
@@ -26,6 +26,7 @@ app.use("./templates/images", express.static(__dirname + "/templates/images"));
 // Use Routes
 //app.use('/user', authenticateJWT, userRoutes);
 app.use('/user', userRoutes);
+app.use('/task', taskRoutes);
 
 app.get("/", (req, res) => {
   res.sendFile("templates/index.html", { root: __dirname });

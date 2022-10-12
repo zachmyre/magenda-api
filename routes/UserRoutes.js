@@ -31,9 +31,13 @@ router.post('/register', async (req, res) => {
                         } else {
                             return res.status(400).json({message: "Error creating user.", error: true});
                         }
+                    }).catch((err) => {
+                        return res.status(500).json({message: err, error: true})
                     })
                 }
         }
+    }).catch((err) => {
+        return res.status(500).json({message: err, error: true})
     })
 });
 
@@ -56,6 +60,8 @@ router.post('/login', async (req, res) => {
         } else {
             return res.status(400).json({message: "Invalid username.", error: true});
         }
+}).catch((err) => {
+    return res.status(500).json({message: err, error: true})
 })
 });
 
