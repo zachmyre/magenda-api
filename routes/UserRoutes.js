@@ -38,10 +38,11 @@ router.post('/register', async (req, res) => {
 });
 
 /*
-* POST /user/register
-* Purpose: Create a new user
+* POST /user/login
+* Purpose: Validates a user's credentials and returns a token
 */
 router.post('/login', async (req, res) => {
+    console.log(req.cookies);
     const { username, password} = req.body;
     User.findOne({username: username}).then((user) => {
         if(user){
