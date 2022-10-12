@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { mongoose, db } = require('./database/mongoose');
@@ -17,6 +18,8 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static(path.join(__dirname, "templates")));
+app.use("./templates/images", express.static(__dirname + "/templates/images"));
 
 
 
@@ -25,7 +28,7 @@ app.use(cors());
 app.use('/user', userRoutes);
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/templates/index.html");
+  res.sendFile("templates/index.html", { root: __dirname });
   });
   
 app.listen(PORT, () => {
