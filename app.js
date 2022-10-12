@@ -1,7 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const { mongoose, db } = require('./database/mongoose');
 const {authenticateJWT} = require('./auth/auth');

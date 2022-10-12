@@ -3,8 +3,9 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const { User, UserGroup, AccessCode } = require('../database/models');
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 12;
+const salt = bcrypt.genSaltSync(saltRounds);
 const JWT_KEY = process.env.JWT_KEY;
 
 
@@ -19,8 +20,8 @@ router.post('/register', async (req, res) => {
             console.log(user);
             return res.status(400).json({message: "Username already exists.", error: true});
         } else {
-            bcrypt.hash(password, saltRounds, (err, hash) => {
-                if(err){
+            const hash = bcrypt.hashSync(password, salt);
+                if(!hash){
                     return res.status(400).json({message: err, error: true});
                 } else {
                     User.create({email: email, username: username, password: hash}).then((user) => {
@@ -32,7 +33,6 @@ router.post('/register', async (req, res) => {
                         }
                     })
                 }
-            });
         }
     })
 });
@@ -46,18 +46,17 @@ router.post('/login', async (req, res) => {
     const { username, password} = req.body;
     User.findOne({username: username}).then((user) => {
         if(user){
-            bcrypt.compare(password, user.password, (err, result) => {
-                if(result){
+            const isPassword = bcrypt.compare(password, user.password);
+                if(isPassword){
                     const token = jwt.sign({ user: user}, JWT_KEY);
                             return res.status(200).json({message: "User logged in successfully", error: false, data: token});
                 } else {
                     return res.status(400).json({message: "Invalid password.", error: true});
                 }
-            });
         } else {
             return res.status(400).json({message: "Invalid username.", error: true});
         }
-    })
+})
 });
 
 
