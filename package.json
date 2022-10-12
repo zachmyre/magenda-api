@@ -13,5 +13,21 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
-  }
+  },
+  "name": "magenda-api",
+  "version": "1.0.0",
+  "description": "API for Magenda!",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zachmyre/magenda-api.git"
+  },
+  "author": "Zachary Myre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zachmyre/magenda-api/issues"
+  },
+  "homepage": "https://github.com/zachmyre/magenda-api#readme"
 }
