@@ -25,7 +25,7 @@ app.use(cors());
 app.use('/user', userRoutes);
 
 app.get("/", (req, res) => {
-    res.sendFile("./templates/index.html", { root: __dirname });
+    res.sendFile(__dirname + "/templates/index.html");
   });
   
 app.listen(PORT, () => {
