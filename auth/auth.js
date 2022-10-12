@@ -1,3 +1,4 @@
+require('dotenv').config()
 const jwt = require('jsonwebtoken');
 
 
@@ -7,7 +8,7 @@ const authenticateJWT = (req, res, next) => {
         return res.sendStatus(401);
     } 
 
-    const accessTokenSecret = ssl_config.cert;
+    const accessTokenSecret = process.env.JWT_KEY;
     if(!authCookies.access_token){
         return res.sendStatus(401);
     }
