@@ -10,7 +10,6 @@ function getUserFromToken(token){
             console.log(decoded);
             user = decoded;
         }
-
       });
-      return decoded.
+      return user;
 }

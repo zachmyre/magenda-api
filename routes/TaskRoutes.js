@@ -28,7 +28,6 @@ router.post('/add/group', async (req, res) => {
 
 router.post('/add/task', async (req, res) => {
     console.log(req.cookies);
-    console.log(req.cookies == {});
     Task.create({
         user_id: req.body.user_id,
         task_group_id: req.body.task_group_id,
