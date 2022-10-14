@@ -46,11 +46,10 @@ router.post('/register', async (req, res) => {
 * Purpose: Validates a user's credentials and returns a token
 */
 router.post('/login', async (req, res) => {
-    console.log(req.cookies);
     const { username, password} = req.body;
-    User.findOne({username: username}).then((user) => {
+    User.findOne({username: username}).then(async (user) => {
         if(user){
-            const isPassword = bcrypt.compare(password, user.password);
+            const isPassword = await bcrypt.compare(password, user.password);
                 if(isPassword){
                     const token = jwt.sign({ user: user}, JWT_KEY);
                             return res.status(200).json({message: "User logged in successfully", error: false, data: token});

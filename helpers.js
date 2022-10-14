@@ -7,9 +7,10 @@ function getUserFromToken(token){
     var user = null;
     jwt.verify(token, JWT_KEY, (err, decoded) => {
         if(!err){
-            console.log(decoded);
             user = decoded;
         }
       });
       return user;
 }
+
+module.exports = { getUserFromToken }

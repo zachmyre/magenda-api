@@ -1,6 +1,7 @@
 require('dotenv').config()
 const router = require('express').Router();
 const { Task, TaskGroup } = require('../database/models');
+const { getUserFromToken } = require("../helpers");
 
 
 
@@ -27,24 +28,28 @@ router.post('/add/group', async (req, res) => {
 });
 
 router.post('/add/task', async (req, res) => {
-    console.log(req.cookies);
-    Task.create({
-        user_id: req.body.user_id,
-        task_group_id: req.body.task_group_id,
-        description: req.body.description,
-        priority: req.body.priority,
-        completed: req.body.completed ?? false,
-        dueDate: req.body.dueDate ?? '',
-        dateCreated: Date.now()
-    }).then((response) => {
-        if(response){
-            return res.status(200).json({message: "Task created successfully.", error: false, data: response});
-        } else {
-        }
-    }).catch((err) => {
-        console.log(err)
-        return res.status(500).json({message: err, error: true})
-    })
+    const user = getUserFromToken(req.body.token);
+    if(user){
+        Task.create({
+            user_id: user._id,
+            task_group_id: req.body.task_group_id,
+            description: req.body.description,
+            priority: req.body.priority,
+            completed: req.body.completed ?? false,
+            dueDate: req.body.dueDate ?? '',
+            dateCreated: Date.now()
+        }).then((response) => {
+            if(response){
+                return res.status(200).json({message: "Task created successfully.", error: false, data: response});
+            } else {
+            }
+        }).catch((err) => {
+            console.log(err)
+            return res.status(500).json({message: err, error: true})
+        })
+    }
+    return res.status(500).json({message: "Unable to identify user!", error: true})
+    
 })
 
 
