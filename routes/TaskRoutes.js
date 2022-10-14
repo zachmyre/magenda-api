@@ -29,6 +29,7 @@ router.post('/add/group', async (req, res) => {
 
 router.post('/add/task', async (req, res) => {
     const user = getUserFromToken(req.body.token);
+    console.log(user);
     if(user){
         Task.create({
             user_id: user._id,
@@ -41,15 +42,16 @@ router.post('/add/task', async (req, res) => {
         }).then((response) => {
             if(response){
                 return res.status(200).json({message: "Task created successfully.", error: false, data: response});
-            } else {
             }
         }).catch((err) => {
             console.log(err)
             return res.status(500).json({message: err, error: true})
         })
-    }
-    return res.status(500).json({message: "Unable to identify user!", error: true})
+    } else {
+        return res.status(500).json({message: "Unable to identify user!", error: true})
     
+    }
+
 })
 
 

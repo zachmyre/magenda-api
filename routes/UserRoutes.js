@@ -1,6 +1,7 @@
 require('dotenv').config()
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
+const { getUserFromToken } = require("../helpers");
 const { User, UserGroup, AccessCode } = require('../database/models');
 
 const bcrypt = require('bcryptjs');
@@ -62,6 +63,19 @@ router.post('/login', async (req, res) => {
 }).catch((err) => {
     return res.status(500).json({message: err, error: true})
 })
+});
+
+/*
+* POST /user/token
+* Purpose: Check's token of a request and returns the user
+*/
+router.post('/token', async (req, res) => {
+    const { token } = req.body;
+    const user = getUserFromToken(token);
+    if(user){
+        return res.status(200).json({message: "User found", error: false, data: user})
+    }
+    return res.status(400).json({message: "User not found", error: true});
 });
 
 
