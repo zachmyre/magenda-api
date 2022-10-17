@@ -7,8 +7,7 @@ function getUserFromToken(token){
     var user = null;
     jwt.verify(token, JWT_KEY, (err, decoded) => {
         if(!err){
-            console.log(decoded);
-            user = {_id: decoded._id, username: decoded.username, email: decoded.email};
+            user = {_id: decoded.user._id, username: decoded.user.username, email: decoded.user.email};
         }
       });
       return user;
