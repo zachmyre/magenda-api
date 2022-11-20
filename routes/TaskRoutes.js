@@ -27,6 +27,24 @@ router.post('/add/group', async (req, res) => {
     })
 });
 
+router.post('/fetch/group', async (req, res) => {
+    const user = getUserFromToken(req.body.token);
+    console.log(user);
+    if(user){
+        TaskGroup.find({user_id: user._id}).then((response) => {
+            if(response){
+                return res.status(200).json({message: "Task Group fetched successfully.", error: false, data: response});
+            }
+        }).catch((err) => {
+            console.log(err)
+            return res.status(500).json({message: err, error: true})
+        })
+    } else {
+        return res.status(500).json({message: "Unable to identify user!", error: true})
+
+    }
+    })
+
 router.post('/add/task', async (req, res) => {
     const user = getUserFromToken(req.body.token);
     console.log(user);
@@ -51,8 +69,26 @@ router.post('/add/task', async (req, res) => {
         return res.status(500).json({message: "Unable to identify user!", error: true})
     
     }
-
 })
+
+router.post('/fetch/task', async (req, res) => {
+    const user = getUserFromToken(req.body.token);
+    console.log(user);
+    if(user){
+        Task.find({user_id: user._id}).then((response) => {
+            if(response){
+                return res.status(200).json({message: "Tasks fetched successfully.", error: false, data: response});
+            }
+        }).catch((err) => {
+            console.log(err)
+            return res.status(500).json({message: err, error: true})
+        })
+    } else {
+        return res.status(500).json({message: "Unable to identify user!", error: true})
+
+    }
+    })
+
 
 
 module.exports = router;
